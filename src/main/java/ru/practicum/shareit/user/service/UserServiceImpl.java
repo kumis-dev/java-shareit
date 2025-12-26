@@ -1,0 +1,63 @@
+package ru.practicum.shareit.user.service;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import ru.practicum.shareit.exception.ConflictException;
+import ru.practicum.shareit.exception.NotFoundException;
+import ru.practicum.shareit.user.dto.UserDto;
+import ru.practicum.shareit.user.mapper.UserMapper;
+import ru.practicum.shareit.user.model.User;
+import ru.practicum.shareit.user.repository.UserRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService {
+    private final UserRepository repository;
+
+    @Override
+    public UserDto create(UserDto dto) {
+        if (repository.existsEmail(dto.getEmail()))
+            throw new ConflictException("Этот email уже используется");
+
+        User user = UserMapper.mapToUser(dto);
+        return UserMapper.mapToUserDto(repository.save(user));
+    }
+
+    @Override
+    public UserDto update(Long userId, UserDto newDto) {
+        User user = repository.findById(userId).orElseThrow(
+                () -> new NotFoundException("Пользователь не найден"));
+
+        if (repository.existsEmail(newDto.getEmail()))
+            throw new ConflictException("Email уже используется");
+
+        User newUser = UserMapper.mapToUser(newDto);
+        UserMapper.updateFields(user, newUser);
+        return UserMapper.mapToUserDto(repository.update(user));
+    }
+
+    @Override
+    public void delete(Long id) {
+        repository.findById(id).orElseThrow(
+                () -> new NotFoundException("Пользователь не найден"));
+
+        repository.deleteById(id);
+    }
+
+    @Override
+    public List<UserDto> findAll() {
+        return repository.findAll()
+                .stream()
+                .map(UserMapper::mapToUserDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDto findById(Long id) {
+        return UserMapper.mapToUserDto(repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Пользователь не найден")));
+    }
+}
