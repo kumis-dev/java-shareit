@@ -21,7 +21,7 @@ public class ItemMapper {
     }
 
     // ItemDto - Item (когда получаем от пользователя)
-    public static Item mapToItem (ItemDto dto) {
+    public static Item mapToItem(ItemDto dto) {
         Item item = new Item();
 
         item.setName(dto.getName());
