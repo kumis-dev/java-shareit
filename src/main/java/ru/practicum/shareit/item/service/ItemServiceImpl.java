@@ -38,7 +38,7 @@ public class ItemServiceImpl implements ItemService {
             throw new ForbiddenException("Редактировать может только владелец");
 
         Item newItem = ItemMapper.mapToItem(newDto);
-        // обновляем поля у item новыми полями из newItem
+        // обновляем поля item новыми полями из newItem
         ItemMapper.updateFields(item, newItem);
         return ItemMapper.mapToItemDto(itemRepository.update(item));
     }
