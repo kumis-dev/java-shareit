@@ -2,8 +2,10 @@ package ru.practicum.shareit;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
-@SpringBootApplication
+// это временно, т к бд не настроена и не сбивать шаблоны что здесь уже были
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class ShareItApp {
 
 	public static void main(String[] args) {
