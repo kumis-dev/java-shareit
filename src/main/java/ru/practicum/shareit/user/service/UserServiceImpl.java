@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto create(UserDto dto) {
-        if (repository.existsEmail(dto.getEmail()))
+        if (repository.existsByEmail(dto.getEmail()))
             throw new ConflictException("Этот email уже используется");
 
         User user = UserMapper.mapToUser(dto);
@@ -31,12 +31,12 @@ public class UserServiceImpl implements UserService {
         User user = repository.findById(userId).orElseThrow(
                 () -> new NotFoundException("Пользователь не найден"));
 
-        if (repository.existsEmail(newDto.getEmail()))
+        if (repository.existsByEmail(newDto.getEmail()))
             throw new ConflictException("Email уже используется");
 
         User newUser = UserMapper.mapToUser(newDto);
         UserMapper.updateFields(user, newUser);
-        return UserMapper.mapToUserDto(repository.update(user));
+        return UserMapper.mapToUserDto(repository.save(user));
     }
 
     @Override
