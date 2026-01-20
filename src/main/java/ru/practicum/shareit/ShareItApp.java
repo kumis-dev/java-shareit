@@ -2,9 +2,7 @@ package ru.practicum.shareit;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
-// это временно, т к бд не настроена и не сбивать шаблоны что здесь уже были
 @SpringBootApplication
 public class ShareItApp {
 
