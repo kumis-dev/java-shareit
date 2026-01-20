@@ -74,7 +74,7 @@ public class BookingServiceImpl implements BookingService {
         try {
             bookingState = BookingState.valueOf(state);
         } catch (IllegalArgumentException e) {
-            throw new BadRequestException("Unknown state: " + state);
+            throw new BadRequestException("Неизвестное состояние: " + state);
         }
 
         List<Booking> bookings = switch (bookingState) {
@@ -100,7 +100,7 @@ public class BookingServiceImpl implements BookingService {
         try {
             bookingState = BookingState.valueOf(state);
         } catch (IllegalArgumentException e) {
-            throw new BadRequestException("Unknown state: " + state);
+            throw new BadRequestException("Неизвестное состояние: " + state);
         }
 
         List<Booking> bookings = switch (bookingState) {
