@@ -37,7 +37,6 @@ class ItemControllerGatewayTest {
         ItemDto dto = new ItemDto();
         dto.setDescription("Description");
         dto.setAvailable(true);
-        // name отсутствует
 
         mockMvc.perform(post("/items")
                         .header(HttpHeaders.USER_ID, 1L)
