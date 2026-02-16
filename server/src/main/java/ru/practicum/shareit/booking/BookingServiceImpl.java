@@ -16,6 +16,7 @@ import ru.practicum.shareit.user.repository.UserRepository;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -83,9 +84,9 @@ public class BookingServiceImpl implements BookingService {
             case PAST -> bookingRepository.findByBooker_IdAndEndTimeIsBefore(userId, now);
             case FUTURE -> bookingRepository.findByBooker_IdAndStartTimeIsAfter(userId, now);
             case WAITING -> bookingRepository.findByBooker_Id(userId).stream()
-                    .filter(b -> b.getBookingStatus() == BookingStatus.WAITING).toList();
+                    .filter(b -> b.getBookingStatus() == BookingStatus.WAITING).collect(Collectors.toList());
             case REJECTED -> bookingRepository.findByBooker_Id(userId).stream()
-                    .filter(b -> b.getBookingStatus() == BookingStatus.REJECTED).toList();
+                    .filter(b -> b.getBookingStatus() == BookingStatus.REJECTED).collect(Collectors.toList());
             default -> throw new IllegalStateException("Неизвестное состояние");
         };
         bookings.sort(Comparator.comparing(Booking::getStartTime).reversed());
