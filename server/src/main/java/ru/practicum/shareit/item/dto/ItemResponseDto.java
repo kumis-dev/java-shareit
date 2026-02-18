@@ -1,0 +1,22 @@
+package ru.practicum.shareit.item.dto;
+
+import lombok.Data;
+import ru.practicum.shareit.booking.dto.BookingShortDto;
+import ru.practicum.shareit.item.comment.CommentDto;
+
+import java.util.List;
+
+@Data
+public class ItemResponseDto {
+    private Long id;
+    private String name;
+    private Long ownerId;
+    private Long requestId;
+    private String description;
+    // разрешил ли аренду вещи владелец
+    private Boolean available;
+    private BookingShortDto lastBooking;
+    private BookingShortDto nextBooking;
+    private List<CommentDto> comments;
+}
+
